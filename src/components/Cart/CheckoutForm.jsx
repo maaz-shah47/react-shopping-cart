@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Fade } from 'react-reveal';
 
 import './CheckoutForm.css';
 
@@ -21,42 +22,44 @@ const CheckoutForm = ({ createOrder }) => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <ul className='form-container'>
-        <li>
-          <label>Email</label>
-          <input
-            name='email'
-            type='email'
-            required
-            onChange={changeInputHandler}
-          />
-        </li>
-        <li>
-          <label>Name</label>
-          <input
-            name='name'
-            type='text'
-            required
-            onChange={changeInputHandler}
-          />
-        </li>
-        <li>
-          <label>Address</label>
-          <input
-            name='address'
-            type='text'
-            required
-            onChange={changeInputHandler}
-          />
-        </li>
-        <li>
-          <button type='submit' className='button primary'>
-            Checkout
-          </button>
-        </li>
-      </ul>
-    </form>
+    <Fade right cascade>
+      <form onSubmit={onSubmitHandler}>
+        <ul className='form-container'>
+          <li>
+            <label>Email</label>
+            <input
+              name='email'
+              type='email'
+              required
+              onChange={changeInputHandler}
+            />
+          </li>
+          <li>
+            <label>Name</label>
+            <input
+              name='name'
+              type='text'
+              required
+              onChange={changeInputHandler}
+            />
+          </li>
+          <li>
+            <label>Address</label>
+            <input
+              name='address'
+              type='text'
+              required
+              onChange={changeInputHandler}
+            />
+          </li>
+          <li>
+            <button type='submit' className='button primary'>
+              Checkout
+            </button>
+          </li>
+        </ul>
+      </form>
+    </Fade>
   );
 };
 
