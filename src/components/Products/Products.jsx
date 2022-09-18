@@ -1,6 +1,5 @@
 import React from 'react';
-import { formatCurrency } from '../utils/utils';
-
+import { formatCurrency } from '../../utils/utils';
 import './Products.css';
 
 const Products = ({ products }) => {
