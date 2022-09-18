@@ -8,8 +8,8 @@ import Filter from './components/Filter/Filter';
 import Cart from './components/Cart/Cart';
 
 const App = () => {
-  const initialCartItems = JSON.parse(localStorage.getItem('cartItems'));
   const [products, setProducts] = useState(data.products);
+  const initialCartItems = JSON.parse(localStorage.getItem('cartItems'));
   const [size, setSize] = useState('');
   const [sort, setSort] = useState('');
   const [cartItems, setCartItems] = useState(
@@ -101,7 +101,7 @@ const App = () => {
               sortHandler={sortProductsHandler}
               sizeHandler={sizeFilterHandler}
             />
-            <Products products={products} addToCart={addToCartHandler} />
+            <Products addToCart={addToCartHandler} />
           </div>
           <div className='sidebar'>
             <Cart

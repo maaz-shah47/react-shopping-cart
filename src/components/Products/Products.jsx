@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Fade, Zoom } from 'react-reveal';
 import { formatCurrency } from '../../utils/utils';
 import Modal from 'react-modal';
 
 import './Products.css';
+import { fetchProducts } from '../../actions/ProductsAction';
 
-const Products = ({ products, addToCart }) => {
+const Products = ({ addToCart }) => {
+  const dispatch = useDispatch();
+
+  const products = useSelector((state) => state.products.items.products);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      await fetchProducts(dispatch);
+    };
+    getProducts();
+  }, [dispatch]);
   const [modalProduct, setModalProduct] = useState(null);
 
   const showModalHandler = (p) => {
@@ -14,6 +26,9 @@ const Products = ({ products, addToCart }) => {
   const closeModalHandler = () => {
     setModalProduct(null);
   };
+  if (!products) {
+    return <h1>Loading....</h1>;
+  }
   return (
     <div>
       <Fade bottom cascade>
