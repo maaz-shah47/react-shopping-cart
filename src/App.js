@@ -5,11 +5,13 @@ import data from './data.json';
 
 import './App.css';
 import Filter from './components/Filter/Filter';
+import Cart from './components/Cart/Cart';
 
 const App = () => {
   const [products, setProducts] = useState(data.products);
   const [size, setSize] = useState('');
   const [sort, setSort] = useState('');
+  const [cartItems, setCartItems] = useState([]);
 
   const sortProductsHandler = (event) => {
     const sort = event.target.value;
@@ -46,6 +48,28 @@ const App = () => {
       );
     }
   };
+
+  const addToCartHandler = (product) => {
+    const newCartItems = cartItems.slice();
+    let alreadyInCart = false;
+    newCartItems.forEach((item) => {
+      if (item._id === product._id) {
+        item.count = item.count + 1;
+        alreadyInCart = true;
+      }
+    });
+    if (!alreadyInCart) {
+      newCartItems.push({ ...product, count: 1 });
+    }
+
+    setCartItems(newCartItems);
+  };
+
+  const removeFromCartHandler = (product) => {
+    const newCartItems = cartItems.slice();
+    setCartItems(newCartItems.filter((item) => item._id !== product._id));
+  };
+
   return (
     <div className='grid-container'>
       <header>
@@ -61,9 +85,14 @@ const App = () => {
               sortHandler={sortProductsHandler}
               sizeHandler={sizeFilterHandler}
             />
-            <Products products={products} />
+            <Products products={products} addToCart={addToCartHandler} />
           </div>
-          <div className='sidebar'>Cart Items</div>
+          <div className='sidebar'>
+            <Cart
+              cartItems={cartItems}
+              removeFromCart={removeFromCartHandler}
+            />
+          </div>
         </div>
       </main>
       <footer>All rights reserved</footer>
