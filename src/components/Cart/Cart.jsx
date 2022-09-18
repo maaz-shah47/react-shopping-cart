@@ -1,9 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { formatCurrency } from '../../utils/utils';
 
 import './Cart.css';
+import CheckoutForm from './CheckoutForm';
 
-const Cart = ({ cartItems, removeFromCart }) => {
+const Cart = ({ cartItems, removeFromCart, createOrder }) => {
+  const [checkoutFormIsVisible, setCheckoutFormIsVisible] = useState(false);
+
+  const showCheckoutFormHandler = () => {
+    setCheckoutFormIsVisible(true);
+  };
   return (
     <Fragment>
       {cartItems.length === 0 ? (
@@ -45,8 +51,18 @@ const Cart = ({ cartItems, removeFromCart }) => {
                 cartItems.reduce((a, c) => a + c.price * c.count, 0)
               )}
             </div>
-            <button className='button primary'>Proceed</button>
+            <button
+              className='button primary'
+              onClick={showCheckoutFormHandler}
+            >
+              Proceed
+            </button>
           </div>
+        </div>
+      )}
+      {checkoutFormIsVisible && (
+        <div className='cart'>
+          <CheckoutForm createOrder={createOrder} />
         </div>
       )}
     </Fragment>

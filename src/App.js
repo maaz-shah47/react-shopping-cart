@@ -8,10 +8,13 @@ import Filter from './components/Filter/Filter';
 import Cart from './components/Cart/Cart';
 
 const App = () => {
+  const initialCartItems = JSON.parse(localStorage.getItem('cartItems'));
   const [products, setProducts] = useState(data.products);
   const [size, setSize] = useState('');
   const [sort, setSort] = useState('');
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(
+    initialCartItems ? initialCartItems : []
+  );
 
   const sortProductsHandler = (event) => {
     const sort = event.target.value;
@@ -63,11 +66,24 @@ const App = () => {
     }
 
     setCartItems(newCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(newCartItems));
   };
 
   const removeFromCartHandler = (product) => {
     const newCartItems = cartItems.slice();
     setCartItems(newCartItems.filter((item) => item._id !== product._id));
+    localStorage.setItem(
+      'cartItems',
+      JSON.stringify(newCartItems.filter((item) => item._id !== product._id))
+    );
+  };
+
+  const createOrder = (orderFormValues) => {
+    const orderState = {
+      order: orderFormValues,
+      cartItems: cartItems,
+    };
+    console.log(orderState);
   };
 
   return (
@@ -89,6 +105,7 @@ const App = () => {
           </div>
           <div className='sidebar'>
             <Cart
+              createOrder={createOrder}
               cartItems={cartItems}
               removeFromCart={removeFromCartHandler}
             />
