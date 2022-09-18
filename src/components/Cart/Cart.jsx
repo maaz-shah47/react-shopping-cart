@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { Fade } from 'react-reveal';
 import { formatCurrency } from '../../utils/utils';
 
 import './Cart.css';
@@ -20,27 +21,29 @@ const Cart = ({ cartItems, removeFromCart, createOrder }) => {
         </div>
       )}
       <div className='cart'>
-        <ul className='cart-items'>
-          {cartItems.map((item) => (
-            <li key={item._id}>
-              <div>
-                <img src={item.image} alt={item.title} />
-              </div>
-              <div>
-                <div>{item.title}</div>
-                <div className='right'>
-                  {formatCurrency(item.price)} x {item.count}{' '}
-                  <button
-                    className='button'
-                    onClick={() => removeFromCart(item)}
-                  >
-                    Remove
-                  </button>
+        <Fade left cascade>
+          <ul className='cart-items'>
+            {cartItems.map((item) => (
+              <li key={item._id}>
+                <div>
+                  <img src={item.image} alt={item.title} />
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div>
+                  <div>{item.title}</div>
+                  <div className='right'>
+                    {formatCurrency(item.price)} x {item.count}{' '}
+                    <button
+                      className='button'
+                      onClick={() => removeFromCart(item)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Fade>
       </div>
       {cartItems.length !== 0 && (
         <div className='cart'>
